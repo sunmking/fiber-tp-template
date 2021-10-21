@@ -1,8 +1,9 @@
 package model
 
 import (
-	"config"
 	"time"
+
+	"fiber-blog/config"
 
 	"gorm.io/gorm"
 )
