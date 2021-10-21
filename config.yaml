@@ -1,0 +1,18 @@
+server:
+  port: 8600
+
+
+Db:
+  DriverName: "mysql2"
+  Host: "127.0.0.1"
+  Port: "3306"
+  MaxIdleConns: 10
+  MaxOpenConns: 100
+  Timeout: "5s"
+  ReadTimeout: "5s"
+  WriteTimeout: "3s"
+  Charset: "utf8mb4"
+  LogLevel: 0
+  User: "root"
+  Password: "root"
+  Name: "demo"
