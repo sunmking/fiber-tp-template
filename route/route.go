@@ -1,15 +1,17 @@
 package route
 
 import (
-	"expvar"
+	"fiber-blog/app/controller"
 	"fmt"
 
 	"github.com/gofiber/fiber/v2"
 )
 
-var count = expvar.NewInt("count")
-
 func New(app *fiber.App) *fiber.App {
+
+	app.Get("/hello", controller.HelloWorld)
+	app.Get("/post", controller.GetPost)
+	app.Post("/post", controller.SavePost)
 	app.Get("/", func(c *fiber.Ctx) error {
 		fmt.Println("1st route!")
 		return c.Next()
@@ -22,9 +24,9 @@ func New(app *fiber.App) *fiber.App {
 
 	app.Get("/", func(c *fiber.Ctx) error {
 		fmt.Println("3rd route!")
-		count.Add(1)
+
 		//panic("I'm an error")
-		return c.SendString(fmt.Sprintf("hello expvar count %d", count.Value()))
+		return c.SendString("hello expvar count 5")
 	})
 
 	app.Get("/teapot", func(c *fiber.Ctx) error {

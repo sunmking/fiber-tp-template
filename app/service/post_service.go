@@ -1,8 +1,8 @@
 package service
 
 import (
-	"fiber-blog/database"
-	"fiber-blog/model"
+	"fiber-blog/app/database"
+	"fiber-blog/app/model"
 )
 
 func SavePost(post *model.Post) error {

@@ -1,15 +1,13 @@
 package main
 
 import (
-	"expvar"
-	"fmt"
+	"fiber-blog/route"
 	"log"
 	"os"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/compress"
-	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/csrf"
 	expvarmw "github.com/gofiber/fiber/v2/middleware/expvar"
 	"github.com/gofiber/fiber/v2/middleware/logger"
@@ -23,8 +21,6 @@ type Person struct {
 	Name string `json:"name" xml:"name" form:"name"`
 	Pass string `json:"pass" xml:"pass" form:"pass"`
 }
-
-var count = expvar.NewInt("count")
 
 func main() {
 	engine := html.New("./views", ".html")
@@ -66,48 +62,16 @@ func main() {
 		KeyGenerator:   utils.UUID,
 	}))
 	// Or extend your config for customization
-	app.Use(cors.New(cors.Config{
-		AllowOrigins: "https://gofiber.io, https://gofiber.net",
-		AllowHeaders: "Origin, Content-Type, Accept",
-	}))
+	// app.Use(cors.New(cors.Config{
+	// 	AllowOrigins: "https://gofiber.io, https://gofiber.net",
+	// 	AllowHeaders: "Origin, Content-Type, Accept",
+	// }))
 	// Provide a custom compression level
 	app.Use(compress.New(compress.Config{
 		Level: compress.LevelBestSpeed, // 1
 	}))
 
-	app.Get("/", func(c *fiber.Ctx) error {
-		fmt.Println("1st route!")
-		return c.Next()
-	})
-
-	app.Get("*", func(c *fiber.Ctx) error {
-		fmt.Println("2nd route!")
-		return c.Next()
-	})
-
-	app.Get("/", func(c *fiber.Ctx) error {
-		fmt.Println("3rd route!")
-		count.Add(1)
-		//panic("I'm an error")
-		return c.SendString(fmt.Sprintf("hello expvar count %d", count.Value()))
-	})
-
-	app.Get("/teapot", func(c *fiber.Ctx) error {
-		return c.Status(fiber.StatusTeapot).SendString("🍵 short and stout 🍵")
-	})
-
-	app.Get("/v1/some/resource/name\\:customVerb", func(c *fiber.Ctx) error {
-		return c.SendString("Hello, Community")
-	})
-
-	v1 := app.Group("/v1")
-
-	v1.Get("/a2", func(c *fiber.Ctx) error {
-		// Render index template
-		return c.Render("index/index", fiber.Map{
-			"Title": "Hello, World!",
-		})
-	})
+	app = route.New(app)
 
 	log.Fatal(app.Listen(":3000"))
 }
