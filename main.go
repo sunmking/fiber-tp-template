@@ -2,6 +2,7 @@ package main
 
 import (
 	"fiber-blog/route"
+	"github.com/golang-module/carbon/v2"
 	"log"
 	"os"
 	"time"
@@ -15,12 +16,6 @@ import (
 	"github.com/gofiber/fiber/v2/utils"
 	"github.com/gofiber/template/html"
 )
-
-// Field names should start with an uppercase letter
-type Person struct {
-	Name string `json:"name" xml:"name" form:"name"`
-	Pass string `json:"pass" xml:"pass" form:"pass"`
-}
 
 func main() {
 	engine := html.New("./views", ".html")
@@ -42,8 +37,8 @@ func main() {
 		// Go to next middleware:
 		return c.Next()
 	})
-
-	file, _ := os.OpenFile("./runtime/log/"+time.Now().Format("2006-01-01")+".log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	os.MkdirAll("./runtime/log/"+carbon.Now().Format("Ym"), os.ModePerm)
+	file, _ := os.OpenFile("./runtime/log/"+carbon.Now().Format("Ym")+"/"+time.Now().Format("2006-01-01")+".log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 
 	defer file.Close()
 

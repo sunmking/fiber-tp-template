@@ -5,6 +5,10 @@ go 1.17
 require (
 	github.com/gofiber/fiber/v2 v2.19.0
 	github.com/gofiber/template v1.6.17
+	github.com/golang-module/carbon/v2 v2.0.0
+	gopkg.in/yaml.v2 v2.4.0
+	gorm.io/driver/mysql v1.1.2
+	gorm.io/gorm v1.21.16
 )
 
 require (
@@ -17,7 +21,4 @@ require (
 	github.com/valyala/fasthttp v1.29.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
 	golang.org/x/sys v0.0.0-20210514084401-e8d321eab015 // indirect
-	gopkg.in/yaml.v2 v2.4.0 // indirect
-	gorm.io/driver/mysql v1.1.2 // indirect
-	gorm.io/gorm v1.21.16 // indirect
 )

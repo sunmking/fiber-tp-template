@@ -14,5 +14,5 @@ Db:
   Charset: "utf8mb4"
   LogLevel: 0
   User: "root"
-  Password: "root"
+  Password: "123456"
   Name: "demo"
